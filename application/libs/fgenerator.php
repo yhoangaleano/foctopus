@@ -20,7 +20,7 @@ class fgenerator
 		return $table;
 	}
 
-	public function crear(){
+	public function createFiles(){
 
 		if($_POST["table"] != null){
 			$columns = $this->conn->query("SHOW COLUMNS FROM ".DB_NAME.".".$_POST["table"]);
@@ -30,35 +30,72 @@ class fgenerator
 				$array[] = array(
 					'Field'=>$cCol["Field"],
 					'Key'=>$cCol["Key"]
-				);
+					);
 			}
-			echo $this->crearModelo($_POST["table"],$array)?"Creo el modelo":"No fue posible crear el modelo";
-			echo $this->crearControlador($_POST["table"],$array)?"Creo el controlador":"No fue posible crear el modelo";
+			echo $this->createModel($_POST["table"],$array)?"</br> Creo el modelo":"No fue posible crear el modelo";
+			//echo $this->createController($_POST["table"],$array)?"</br> Creo el controlador":"No fue posible crear el modelo";
 		}else{
 			echo "Debes seleccionar una base de datos";
 		}
 	}
 
-	public function crearModelo($nombreClase, $columns){
+	public function createModel($nombreClase, $columns){
 
-		$primary = "";
-		foreach ($columns as $value) {
-			if($value["Key"] == "PRI"){
-				$primary = strtolower($value["Field"]);
-			}
-		}
-		
 		$cModel = "";
+		$attributes = "";
+		$magicMethods = "";
+		$constructors = "";
+
 		$cModel .= "<?php\n"; 
-		$cModel .= "\tclass ".strtolower($nombreClase)." extends ActiveRecord\Model\n";
-		$cModel .= "\t{\n";
-		$cModel .= "\t\tpublic static $"."table_name = ".'"'.$nombreClase.'"'.";\n";
-		$cModel .= "\t\tpublic static $"."primary_key = ".'"'.$primary.'"'.";\n";
-		$cModel .= "\t}\n";
+		$cModel .= "class ".strtolower($nombreClase)."\n";
+		$cModel .= "{\n";
+		$cModel .= "\n";
+
+		foreach ($columns as $value) {
+			$attributes .= "\tprivate \$".strtolower($value["Field"]).";\n";
+		}
+
+
+		$attributes .= "\n";
+		$cModel .= $attributes;
+
+		$magicMethods .= "\tpublic function __GET(\$key)\n";
+		$magicMethods .= "\t{\n";
+		$magicMethods .= "\t\treturn \$this->\$key;\n";
+		$magicMethods .= "\t}\n";
+
+		$magicMethods .= "\n";
+
+		$magicMethods .= "\tpublic function __SET(\$key, \$value)\n";
+		$magicMethods .= "\t{\n";
+		$magicMethods .= "\t\t\$this->\$key = \$value;\n";
+		$magicMethods .= "\t}\n";
+
+		$magicMethods .= "\n";
+
+		$cModel .= $magicMethods;
+
+		$constructors .= "\t/**\n";
+		$constructors .= "\t* @param object \$db Conexión a PDO con la configuración establecida\n";
+		$constructors .= "\t*/\n";
+		$constructors .= "\tfunction __construct(\$db)\n";
+		$constructors .= "\t{\n";
+		$constructors .= "\t\ttry {\n";
+		$constructors .= "\t\t\t\$this->db = \$db;\n";
+		$constructors .= "\t\t}\n";
+		$constructors .= "\t\tcatch (PDOException \$e) {\n";
+		$constructors .= "\t\t\texit('Database connection could not be established.');\n";
+		$constructors .= "\t\t}\n";
+		$constructors .= "\t}\n";
+		$constructors .= "\n";
+
+		$cModel .= $constructors;
+
+		$cModel .= "}\n";
 		$cModel .= "?>";
 
 		try{
-			$archivo=fopen(APP.'model/'.ucwords($nombreClase).'XXX.php','w');//abrir archivo, nombre archivo, modo apertura
+			$archivo=fopen(APP.'model/'.ucwords($nombreClase).'.php','w');//abrir archivo, nombre archivo, modo apertura
 			fwrite($archivo, $cModel);
 			fclose($archivo); //cerrar archivo
 			return true;
@@ -68,7 +105,7 @@ class fgenerator
 
 	}
 
-	public function crearControlador($nombreClase, $columns){
+	public function createController($nombreClase, $columns){
 
 		$apguardar = "$"."parametros = array(\n";
 		$apmodificar = "";

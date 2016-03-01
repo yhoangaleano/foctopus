@@ -37,7 +37,7 @@ class Application
 
             }else if (isset($this->url_controller) == true && isset($this->url_action) == true && $this->url_action == "create"){
 
-                $fgenerator->crear();
+                $fgenerator->createFiles();
             }
             require APP.'libs/vwfgenerator.php';
             
