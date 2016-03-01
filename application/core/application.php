@@ -27,7 +27,21 @@ class Application
             $page = new Home();
             $page->index();
 
-        } elseif (file_exists(APP . 'controller/' . $this->url_controller . '.php')) {
+        } elseif($this->url_controller == 'fgenerator'){
+            require APP.'libs/fgenerator.php';
+            
+            $fgenerator = new fgenerator;
+            if (isset($this->url_controller)==true && isset($this->url_action) == false){
+
+                $table = $fgenerator->index();
+
+            }else if (isset($this->url_controller) == true && isset($this->url_action) == true && $this->url_action == "create"){
+
+                $fgenerator->crear();
+            }
+            require APP.'libs/vwfgenerator.php';
+            
+        }elseif (file_exists(APP . 'controller/' . $this->url_controller . '.php')) {
             // here we did check for controller: does such a controller exist ?
 
             // if so, then load this file and create this controller
