@@ -3,6 +3,7 @@
 class fgenerator 
 {
 	private $conn = null;
+	private $template = "";
 
 	function __construct()
 	{
@@ -26,14 +27,22 @@ class fgenerator
 			$columns = $this->conn->query("SHOW COLUMNS FROM ".DB_NAME.".".$_POST["table"]);
 			$array = array();
 			while($cCol = mysqli_fetch_array($columns))
-			{	
+			{
 				$array[] = array(
 					'Field'=>$cCol["Field"],
-					'Key'=>$cCol["Key"]
+					'Key'=>$cCol["Key"],
+					'AutoIncrement' => $cCol["Extra"]
 					);
 			}
-			echo $this->createModel($_POST["table"],$array)?"</br> Creo el modelo":"No fue posible crear el modelo";
+
+			if($_POST["template"] != null){
+				$this->template = $_POST["template"];
+				echo $this->createModel($_POST["table"],$array)?"</br> Creo el modelo":"No fue posible crear el modelo";
 			//echo $this->createController($_POST["table"],$array)?"</br> Creo el controlador":"No fue posible crear el modelo";
+			}else{
+				echo "Debes seleccionar un template";
+			}
+
 		}else{
 			echo "Debes seleccionar una base de datos";
 		}
@@ -41,68 +50,15 @@ class fgenerator
 
 	public function createModel($nombreClase, $columns){
 
-		$cModel = "";
-		$attributes = "";
-		$magicMethods = "";
-		$constructors = "";
-
-		$cModel .= "<?php\n"; 
-		$cModel .= "class ".strtolower($nombreClase)."\n";
-		$cModel .= "{\n";
-		$cModel .= "\n";
-
-		foreach ($columns as $value) {
-			$attributes .= "\tprivate \$".strtolower($value["Field"]).";\n";
-		}
-
-
-		$attributes .= "\n";
-		$cModel .= $attributes;
-
-		$magicMethods .= "\tpublic function __GET(\$key)\n";
-		$magicMethods .= "\t{\n";
-		$magicMethods .= "\t\treturn \$this->\$key;\n";
-		$magicMethods .= "\t}\n";
-
-		$magicMethods .= "\n";
-
-		$magicMethods .= "\tpublic function __SET(\$key, \$value)\n";
-		$magicMethods .= "\t{\n";
-		$magicMethods .= "\t\t\$this->\$key = \$value;\n";
-		$magicMethods .= "\t}\n";
-
-		$magicMethods .= "\n";
-
-		$cModel .= $magicMethods;
-
-		$constructors .= "\t/**\n";
-		$constructors .= "\t* @param object \$db Conexión a PDO con la configuración establecida\n";
-		$constructors .= "\t*/\n";
-		$constructors .= "\tfunction __construct(\$db)\n";
-		$constructors .= "\t{\n";
-		$constructors .= "\t\ttry {\n";
-		$constructors .= "\t\t\t\$this->db = \$db;\n";
-		$constructors .= "\t\t}\n";
-		$constructors .= "\t\tcatch (PDOException \$e) {\n";
-		$constructors .= "\t\t\texit('Database connection could not be established.');\n";
-		$constructors .= "\t\t}\n";
-		$constructors .= "\t}\n";
-		$constructors .= "\n";
-
-		$cModel .= $constructors;
-
-		$cModel .= "}\n";
-		$cModel .= "?>";
-
+		require APP.'libs/templates/models/'.$this->template.'.php';
 		try{
-			$archivo=fopen(APP.'model/'.ucwords($nombreClase).'.php','w');//abrir archivo, nombre archivo, modo apertura
+			$archivo=fopen(APP.'model/'.ucwords($nombreClase).'.php','w');
 			fwrite($archivo, $cModel);
-			fclose($archivo); //cerrar archivo
+			fclose($archivo);
 			return true;
 		}catch(Excpetion $e){
 			return false;
 		}
-
 	}
 
 	public function createController($nombreClase, $columns){

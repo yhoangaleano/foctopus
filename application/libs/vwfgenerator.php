@@ -57,6 +57,14 @@
               <?php echo $table; ?>
             </select>
           </div>
+          
+          <div class="form-group">
+            <select name="template" class="form-control">
+              <option value="">Seleccione un template</option>
+              <option value="MVC_GET_POST">Metodos HTTP (GET, POST)</option>
+            </select>
+          </div>
+
           <button type="submit" class="btn btn-success">Crear Crud</button>
         </form>
       </div>
