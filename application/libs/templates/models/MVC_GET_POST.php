@@ -239,7 +239,7 @@ $update .= "\t\t\t\$validate = true;\n";
 $update .= "\t\t}\n\n";
 
 $update .= "\t\treturn \$validate; \n";
-$update .= "\t\n";
+$update .= "\t}\n\n";
 
 $cModel .= $update;
 
