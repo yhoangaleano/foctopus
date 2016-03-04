@@ -5,7 +5,7 @@
     <div class="form-group">
         <input type="password" class="form-control" placeholder="Password" required="" id="txtPassword">
     </div>
-    <button type="submit" class="btn btn-primary block full-width m-b" id="btnInit">Login</button>
+    <button type="button" class="btn btn-primary block full-width m-b" id="btnInit">Login</button>
 </form>
 
 <?php

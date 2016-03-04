@@ -13,7 +13,7 @@
 
     <link href="<?php echo URL; ?>inspina/css/animate.css" rel="stylesheet">
     <link href="<?php echo URL; ?>inspina/css/style.css" rel="stylesheet">
-      <link href="<?php echo URL; ?>css/alertify.css" rel="stylesheet">
+    <link href="<?php echo URL; ?>css/alertify.css" rel="stylesheet">
 
 </head>
 
@@ -38,7 +38,10 @@
             <p class="m-t"> <small>Octopus una idea que revolucionara la administracion de la propiedad horizontal</small> </p>
         </div>
     </div>
-
+    
+    <script>
+        var url = "<?php echo URL; ?>inspina/";
+    </script>
     <!-- Mainly scripts -->
     <script src="<?php echo URL; ?>inspina/js/jquery-2.1.1.js"></script>
     <script src="<?php echo URL; ?>inspina/js/bootstrap.min.js"></script>
@@ -46,9 +49,6 @@
     <script src="<?php echo URL; ?>js/plugins/jquery.validator/jquery.validate.min.js"></script>
 
 </body>
-<script>
-var url = "<?php echo URL; ?>inspina/";
-</script>
 
 <?php 
 if (isset($js)) {

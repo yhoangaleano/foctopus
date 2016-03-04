@@ -10,7 +10,7 @@ var login = {
 
 		$( "#btnInit" ).click(function() {
 			debugger;
-				login.iniciar();
+			login.iniciar();
 		});
 
 	},
@@ -21,15 +21,13 @@ var login = {
 		var pass = $("#txtPassword").val();
 
 		$.ajax({
-			url: url+"usuarios/login",
+			url: "/foctopus/usuarios/login",
 			type: 'POST',
 			dataType: 'json',
 			data: {username: user, password: pass },
 		})
 		.done(function(respuesta) {
-debugger;
-console.log(respuesta);
-			alertify.success(respuesta.username + " " + respuesta.password);
+			console.log(respuesta);
 			
 		})
 		.fail(function(error) {

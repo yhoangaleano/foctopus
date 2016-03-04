@@ -25,13 +25,21 @@ class usuarios extends Controller
     public function index()
     {
         $this->layout = "tmpLogin";
-        $this->render("login");
+        $this->render("index");
     }
 
-    public function login($username, $password)
-    {
+    public function login()
+    {        
         if ($_POST != null) {
-            echo json_encode(["usuario" => $username, "password"=>$password]);
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+            
+            $this->modelUser->__SET("username", $username);
+            $this->modelUser->__SET("password", $password);
+
+            $respuesta = $this->modelUser->getUsers();
+            header("Location:songs.php");
+            echo json_encode($respuesta);
         }else{
             echo "error";
         }
