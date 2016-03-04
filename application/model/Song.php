@@ -88,5 +88,25 @@ class song
 		// fetch() is the PDO method that get exactly one result
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
+
+	public function updateSong()
+	{
+		$sql = "UPDATE song SET artist = :artist, track = :track, link = :link WHERE id = :id";
+		$query = $this->db->prepare($sql);
+		$parameters = array(
+			 ':id' => strip_tags($this->__GET("id")),  ':artist' => strip_tags($this->__GET("artist")),  ':track' => strip_tags($this->__GET("track")),  ':link' => strip_tags($this->__GET("link"))
+		);
+		// useful for debugging: you can see the SQL behind above construction by using:
+		// echo '[ PDO DEBUG ]: ' . Helper::debugPDO($sql, $parameters);  exit();
+
+		$validate = false;
+		$query->execute($parameters);
+
+		if ($query->rowCount() > 0) {
+			$validate = true;
+		}
+
+		return $validate; 
+	
 }
 ?>

@@ -192,12 +192,12 @@ $get .= "\t\t\$query = \$this->db->prepare(\$sql);\n";
 $get .= "\t\t\$parameters = array(\n";
 $get .= "\t\t\t':".strtolower($primary)."' => strip_tags(\$this->__GET(\"".strtolower($primary)."\"))\n";
 $get .= "\t\t);\n\n";
-    
+
 $get .= "\t\t// useful for debugging: you can see the SQL behind above construction by using:\n";
 $get .= "\t\t// echo '[ PDO DEBUG ]: ' . Helper::debugPDO(\$sql, \$parameters);  exit();\n";
-    
+
 $get .= "\t\t\$query->execute(\$parameters);\n";
-    
+
 $get .= "\t\t// fetch() is the PDO method that get exactly one result\n";
 $get .= "\t\treturn \$query->fetch(".$fecthMode.");\n";
 $get .= "\t}\n\n";
@@ -208,29 +208,40 @@ $cModel .= $get;
 
 //Begin Method Update
 
-$update .= "\tpublic function updateSong()\n";
+$update .= "\tpublic function update".ucwords($nombreClase)."()\n";
 $update .= "\t{\n";
-$update .= "\t\t\$sql = \"UPDATE song SET artist = :artist, track = :track, link = :link WHERE id = :song_id\";\n";
+$update .= "\t\t\$sql = \"UPDATE ".strtolower($nombreClase)." SET ";
+$update .= implode(', ', array_map(function ($value) {
+	return strtolower($value["Field"])." = :".strtolower($value["Field"]);
+}, $columsNPK));
+
+
+$update .= " WHERE ".strtolower($primary)." = :".strtolower($primary)."\";\n";
 $update .= "\t\t\$query = \$this->db->prepare(\$sql);\n";
+
 $update .= "\t\t\$parameters = array(\n";
-$update .= "\t\t    ':artist' => \$artist,\n";
-$update .= "\t\t    ':track' => \$track,\n";
-$update .= "\t\t    ':link' => \$link,\n";
-$update .= "\t\t    ':song_id' => \$song_id\n";
-$update .= "\t\t    );\n";
-    
-$update .= "\t// useful for debugging: you can see the SQL behind above construction by using:\n";
-$update .= "\t// echo '[ PDO DEBUG ]: ' . Helper::debugPDO(\$sql, \$parameters);  exit();\n";
-    
-$update .= "\t\$validate = false;\n";
-$update .= "\t\$query->execute(\$parameters);\n";
-    
-$update .= "\tif (\$query->rowCount() > 0) {\n";
-$update .= "\$validate = true;\n";
-$update .= "\t}\n";
-    
-$update .= "\treturn \$validate; \n";
+
+$update .= "\t\t\t".implode(', ', array_map(function ($value) {
+	return " ':".strtolower($value["Field"])."' => strip_tags(\$this->__GET(\"".strtolower($value["Field"])."\"))";
+}, $columns))."\n";
+
+$update .= "\t\t);\n";
+
+
+$update .= "\t\t// useful for debugging: you can see the SQL behind above construction by using:\n";
+$update .= "\t\t// echo '[ PDO DEBUG ]: ' . Helper::debugPDO(\$sql, \$parameters);  exit();\n\n";
+
+$update .= "\t\t\$validate = false;\n";
+$update .= "\t\t\$query->execute(\$parameters);\n\n";
+
+$update .= "\t\tif (\$query->rowCount() > 0) {\n";
+$update .= "\t\t\t\$validate = true;\n";
+$update .= "\t\t}\n\n";
+
+$update .= "\t\treturn \$validate; \n";
 $update .= "\t\n";
+
+$cModel .= $update;
 
 //End Method Update
 

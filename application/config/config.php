@@ -57,3 +57,13 @@ define('DB_NAME', 'mini');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8');
+
+
+
+// define('DB_TYPE', 'mysql');
+// define('DB_HOST', 'mailing-octoapp.rhcloud.com');
+// define('DB_PORT', '3306');
+// define('DB_NAME', 'mailing');
+// define('DB_USER', 'adminNbRd91s');
+// define('DB_PASS', 'ylndc1hlKASk');
+// define('DB_CHARSET', 'utf8');
