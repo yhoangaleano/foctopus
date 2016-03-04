@@ -31,18 +31,33 @@ class usuarios extends Controller
     public function login()
     {        
         if ($_POST != null) {
-            $username = $_POST["username"];
-            $password = $_POST["password"];
+            $username = $_POST["txtUsername"];
+            $password = $_POST["txtPassword"];
             
             $this->modelUser->__SET("username", $username);
             $this->modelUser->__SET("password", $password);
 
             $respuesta = $this->modelUser->getUsers();
-            header("Location:songs.php");
-            echo json_encode($respuesta);
+            
+            $_SESSION["rol"] = $respuesta->rol;
+            $_SESSION["id"] = $respuesta->id;
+
+            if ($respuesta->rol == "administrador") {
+                header("Location:/foctopus/administrador/index"); 
+            }else{
+                header("Location:/foctopus/cliente/index");
+            }
+
         }else{
             echo "error";
         }
         
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        session_unset();
+        header("Location:/foctopus/usuarios/index");
     }
 }

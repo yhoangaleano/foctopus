@@ -9,7 +9,6 @@ var login = {
 
 
 		$( "#btnInit" ).click(function() {
-			debugger;
 			login.iniciar();
 		});
 
