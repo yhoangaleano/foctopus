@@ -107,6 +107,7 @@ class song
 		}
 
 		return $validate; 
-	
+	}
+
 }
 ?>
