@@ -1,5 +1,5 @@
 <?php
-class song
+class Song
 {
 
 	private $id;
