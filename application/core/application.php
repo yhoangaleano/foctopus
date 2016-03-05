@@ -23,8 +23,8 @@ class Application
         // check for controller: no controller given ? then load start-page
         if (!$this->url_controller) {
 
-            require APP . 'controller/home.php';
-            $page = new Home();
+            require APP . 'controller/usuarios.php';
+            $page = new usuarios();
             $page->index();
 
         } elseif($this->url_controller == 'fgenerator'){
