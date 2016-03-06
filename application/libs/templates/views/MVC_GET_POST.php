@@ -29,7 +29,7 @@ foreach ($columns as $value) {
 $htmlTemplate .= "<div class=\"container\">\n";
 $htmlTemplate .= "\t<div class=\"row\">\n";
 $htmlTemplate .= "\t\t<div class=\"col-md-12\">\n";
-$htmlTemplate .= "\t\t\t<div class=\"panel panel-default\">\n";
+$htmlTemplate .= "\t\t\t<form id=\"form".ucwords($nombreClase)."\" class=\"panel panel-default\">\n";
 $htmlTemplate .= "\t\t\t\t<div class=\"panel-heading\">\n";
 $htmlTemplate .= "\t\t\t\t\t<h3 class=\"panel-title\">Crear ".ucwords($nombreClase)."</h3>\n";
 $htmlTemplate .= "\t\t\t\t</div>\n";
@@ -65,7 +65,7 @@ $htmlTemplate .= "\t\t\t\t\t\t</div>\n";
 
 $htmlTemplate .= "\t\t\t\t\t</div>\n";
 $htmlTemplate .= "\t\t\t\t</div>\n";
-$htmlTemplate .= "\t\t\t</div>\n";
+$htmlTemplate .= "\t\t\t</form>\n";
 
 $htmlTemplate .= "\t\t\t<div class=\"panel panel-default\">\n";
 $htmlTemplate .= "\t\t\t\t<div class=\"panel-heading\">Listado de ".ucwords($nombreClase)."s</div>\n";

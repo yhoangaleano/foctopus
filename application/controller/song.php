@@ -39,7 +39,7 @@
 		public function edit($id)
 		{
 			if (!is_null($id)) {
-				$this->modelSong->__SET('id', $_POST["txtId"]);
+				$this->modelSong->__SET('id', $id);
 				$song = $this->modelSong->getSong();
 				$this->render('edit');
 			} else {
@@ -64,7 +64,7 @@
 		public function delete($id)
 		{
 			if (!is_null($id)) {
-				$this->modelSong->__SET('id', $_POST["txtId"]);
+				$this->modelSong->__SET('id', $id);
 				$song = $this->modelSong->getSong();
 				$this->render('delete');
 			} else {

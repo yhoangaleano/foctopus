@@ -93,6 +93,28 @@ class fgenerator
 			$archivo=fopen(APP.'view/'.strtolower($nombreClase).'/index.php','w');//abrir archivo, nombre archivo, modo apertura
 			fwrite($archivo, $cView);
 			fclose($archivo); //cerrar archivo
+
+			echo $this->createJS($nombreClase, $columns)?"<script>alert(\"Buen trabajo! El JS ha sido generado\")</script>":"<script>alert(\"Oh no! Ocurrio un error al generar el JS\")</script>";
+			return true;
+		}catch(Excpetion $e){
+			return false;
+		}
+		
+	}
+
+	public function createJS($nombreClase, $columns)
+	{
+		require APP.'libs/templates/js/'.$this->template.'.php';
+
+		try{
+
+			if (!file_exists(PUBLICAPP.'js/pages')) {  
+				mkdir(PUBLICAPP.'js/pages', 0700); 
+			}			
+
+			$archivo=fopen(PUBLICAPP.'js/pages/'.strtolower($nombreClase).'Ajax.js','w');//abrir archivo, nombre archivo, modo apertura
+			fwrite($archivo, $cJS);
+			fclose($archivo); //cerrar archivo
 			return true;
 		}catch(Excpetion $e){
 			return false;

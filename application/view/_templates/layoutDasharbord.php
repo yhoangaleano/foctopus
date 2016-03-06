@@ -12,6 +12,15 @@
 
 
   <link href="<?php echo URL; ?>css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?php echo URL; ?>css/alertify.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.css"/>
+
+  <style>
+    .panel > .dataTables_wrapper {
+      padding: 15px;
+    }    
+  </style>
+
 
 
 </head>
@@ -86,7 +95,11 @@
   </script>
 
   <script src="<?php echo URL; ?>js/plugins/jquery/jquery.min.js"></script>
-  <script src="<?php echo URL; ?>js//plugins/bootstrap/bootstrap.min.js"></script>
+  <script src="<?php echo URL; ?>js/plugins/tmpl/tmpl.min.js"></script>
+  <script src="<?php echo URL; ?>js/plugins/bootstrap/bootstrap.min.js"></script>
+  <script src="<?php echo URL; ?>js/plugins/alertify/alertify.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.js"></script>
+  <script src="<?php echo URL; ?>js/plugins/jquery.validator/jquery.validate.min.js"></script>
 
   <?php
 

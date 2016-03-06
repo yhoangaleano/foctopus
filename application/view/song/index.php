@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="panel panel-default">
+			<form id="formSong" class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Crear Song</h3>
 				</div>
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 			<div class="panel panel-default">
 				<div class="panel-heading">Listado de Songs</div>
 				<table class="table table-hover" id="tblSong">
