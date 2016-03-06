@@ -109,6 +109,47 @@ $rUpdate .= "\t\t\t}\n";
 $rUpdate .= "\t\t}\n\n";
 $cController .= $rUpdate;
 
+
+$cUpdate .= "\t\tpublic function update".ucwords($nombreClase)."()\n";
+$cUpdate .= "\t\t{\n";
+$cUpdate .= "\t\t\tif (isset(\$_POST[\"action\"])) {\n";
+
+foreach ($columns as $value) {
+	$cUpdate .= "\t\t\t\t\$this->".$model."->__SET('".$value['Field']."', \$_POST[\"txt".ucwords($value['Field'])."\"]);\n";
+}
+
+$cUpdate .= "\t\t\t\t\$result = \$this->".$model."->update".ucwords($nombreClase)."();\n";
+$cUpdate .= "\t\t\t\techo json_encode(array('result' => \$result));\n";
+$cUpdate .= "\t\t\t\treturn;\n";
+$cUpdate .= "\t\t\t}\n";
+$cUpdate .= "\t\t\techo json_encode(array('result' => false));\n";
+$cUpdate .= "\t\t}\n\n";
+$cController .= $cUpdate;
+
+$rDelete .= "\t\tpublic function delete(\$".$primary.")\n";
+$rDelete .= "\t\t{\n";
+$rDelete .= "\t\t\tif (!is_null(\$".$primary.")) {\n";
+$rDelete .= "\t\t\t\t\$this->".$model."->__SET('".$primary."', \$_POST[\"txt".ucwords($primary)."\"]);\n";
+$rDelete .= "\t\t\t\t\$".strtolower($nombreClase)." = \$this->".$model."->get".ucwords($nombreClase)."();\n";
+$rDelete .= "\t\t\t\t\$this->render('delete');\n";
+$rDelete .= "\t\t\t} else {\n";
+$rDelete .=	"\t\t\t\theader('location: ' . URL . 'songs/index');\n";
+$rDelete .= "\t\t\t}\n";
+$rDelete .= "\t\t}\n\n";
+$cController .= $rDelete;
+
+$cDelete .= "\t\tpublic function delete".ucwords($nombreClase)."()\n";
+$cDelete .= "\t\t{\n";
+$cDelete .= "\t\t\tif (isset(\$_POST[\"action\"])) {\n";
+$cDelete .= "\t\t\t\t\$this->".$model."->__SET('".$primary."', \$_POST[\"txt".ucwords($primary)."\"]);\n";
+$cDelete .= "\t\t\t\t\$result = \$this->".$model."->delete".ucwords($nombreClase)."();\n";
+$cDelete .= "\t\t\t\techo json_encode(array('result' => \$result));\n";
+$cDelete .= "\t\t\t\treturn;\n";
+$cDelete .= "\t\t\t}\n";
+$cDelete .= "\t\t\techo json_encode(array('result' => false));\n";
+$cDelete .= "\t\t}\n\n";
+$cController .= $cDelete;
+
 $cGet .= "\t\tpublic function get".ucwords($nombreClase)."()\n";
 $cGet .= "\t\t{\n";
 $cGet .= "\t\t\t\$this->".$model."->__SET('".$primary."', \$_POST[\"txt".ucwords($primary)."\"]);\n";
@@ -116,58 +157,6 @@ $cGet .= "\t\t\t\$".strtolower($nombreClase)." = \$this->".$model."->get".ucword
 $cGet .= "\t\t\techo json_encode(array('result' => \$".strtolower($nombreClase)."));\n";
 $cGet .= "\t\t}\n\n";
 $cController .= $cGet;
-
-
-// $cController .= "\t\tpublic function crear(){\n";
-// $cController .= "\t\t\t$".ucwords($nombreClase)." = $"."this->loadModel("."'".strtolower($nombreClase)."'".")->find('all');\n\n";
-// $cController .= "\t\t\t".$apguardar."\n";
-// $cController .= "\t\t\t$"."mensaje = null;\n";
-// $cController .= "\t\t\t$"."modelo = new ".strtolower($nombreClase)."($"."parametros);\n";
-// $cController .= "\t\t\ttry{\n";
-// $cController .= "\t\t\t\tif($"."modelo->save()){\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = 'Operación exitosa';\n";
-// $cController .= "\t\t\t\t}else{\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = 'Ha ocurrido un error';\n";
-// $cController .= "\t\t\t\t}\n";
-// $cController .= "\t\t\t}catch(Exception $"."e){\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = $"."e->getMessage();\n";
-// $cController .= "\t\t\t}\n";
-// $cController .= "\t\t\t$"."this->render('index',array('datos'=>$".ucwords($nombreClase).",'mensaje'=>$"."mensaje));\n";
-// $cController .= "\t\t}\n\n";
-
-// $cController .= "\t\tpublic function modificar(){\n";
-// $cController .= "\t\t\t$".ucwords($nombreClase)." = $"."this->loadModel("."'".strtolower($nombreClase)."'".")->find('all');\n";
-// $cController .= "\t\t\t$"."model = $"."this->loadModel("."'".strtolower($nombreClase)."'".")->find($"."_POST[".'"'."codigo".'"'."]".");\n\n";
-// $cController .= "".$apmodificar."\n";
-// $cController .= "\t\t\t$"."mensaje = null;\n";
-// $cController .= "\t\t\ttry{\n";
-// $cController .= "\t\t\t\tif($"."model->save()){\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = 'Operación exitosa';\n";
-// $cController .= "\t\t\t\t}else{\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = 'Ha ocurrido un error';\n";
-// $cController .= "\t\t\t\t}\n";
-// $cController .= "\t\t\t}catch(Exception $"."e){\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = $"."e->getMessage();\n";
-// $cController .= "\t\t\t}\n";
-// $cController .= "\t\t\t$"."this->render('index',array('datos'=>$".ucwords($nombreClase).",'mensaje'=>$"."mensaje));\n";
-// $cController .= "\t\t}\n\n";
-
-
-// $cController .= "\t\tpublic function modificar($"."codigo){\n";
-// $cController .= "\t\t\t$".ucwords($nombreClase)." = $"."this->loadModel("."'".strtolower($nombreClase)."'".")->find('all');\n";
-// $cController .= "\t\t\t$"."model = $"."this->loadModel("."'".strtolower($nombreClase)."'".")->find($"."codigo);\n";
-// $cController .= "\t\t\t$"."mensaje = null;\n";
-// $cController .= "\t\t\ttry{\n";
-// $cController .= "\t\t\t\tif($"."model->delete()){\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = 'Operación exitosa';\n";
-// $cController .= "\t\t\t\t}else{\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = 'Ha ocurrido un error';\n";
-// $cController .= "\t\t\t\t}\n";
-// $cController .= "\t\t\t}catch(Exception $"."e){\n";
-// $cController .= "\t\t\t\t\t$"."mensaje = $"."e->getMessage();\n";
-// $cController .= "\t\t\t}\n";
-// $cController .= "\t\t\t$"."this->render('index',array('datos'=>$".ucwords($nombreClase).",'mensaje'=>$"."mensaje));\n";
-// $cController .= "\t\t}\n\n";
 
 $cController .= "\t}\n";
 $cController .= "?>";

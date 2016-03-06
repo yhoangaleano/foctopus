@@ -47,11 +47,47 @@
 			}
 		}
 
-		public function getSong()
+		public function updateSong()
 		{
+			if (isset($_POST["action"])) {
+				$this->modelSong->__SET('id', $_POST["txtId"]);
+				$this->modelSong->__SET('artist', $_POST["txtArtist"]);
+				$this->modelSong->__SET('track', $_POST["txtTrack"]);
+				$this->modelSong->__SET('link', $_POST["txtLink"]);
+				$result = $this->modelSong->updateSong();
+				echo json_encode(array('result' => $result));
+				return;
+			}
+			echo json_encode(array('result' => false));
+		}
+
+		public function delete($id)
+		{
+			if (!is_null($id)) {
 				$this->modelSong->__SET('id', $_POST["txtId"]);
 				$song = $this->modelSong->getSong();
-				echo json_encode(array('result' => $song));
+				$this->render('delete');
+			} else {
+				header('location: ' . URL . 'songs/index');
+			}
+		}
+
+		public function deleteSong()
+		{
+			if (isset($_POST["action"])) {
+				$this->modelSong->__SET('id', $_POST["txtId"]);
+				$result = $this->modelSong->deleteSong();
+				echo json_encode(array('result' => $result));
+				return;
+			}
+			echo json_encode(array('result' => false));
+		}
+
+		public function getSong()
+		{
+			$this->modelSong->__SET('id', $_POST["txtId"]);
+			$song = $this->modelSong->getSong();
+			echo json_encode(array('result' => $song));
 		}
 
 	}

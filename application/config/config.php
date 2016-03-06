@@ -57,6 +57,7 @@ define('DB_NAME', 'octopus');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8');
+//Dev
 
 
 

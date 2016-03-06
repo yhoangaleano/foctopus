@@ -50,7 +50,7 @@
     <div class="row">
       <div class="col-sm-12 col-md-12">
         <h1 class="page-header">Auto Generador Código</h1>
-        <form action="fgenerator/create" method="post">
+        <form action="/foctopus/fgenerator/create" method="post">
           <div class="form-group">
             <select name="table" class="form-control">
               <option value="">Seleccione Tabla</option>

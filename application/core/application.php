@@ -33,11 +33,12 @@ class Application
             $fgenerator = new fgenerator;
             if (isset($this->url_controller)==true && isset($this->url_action) == false){
 
-                $table = $fgenerator->index();
+                $table = $fgenerator->showTables();
 
             }else if (isset($this->url_controller) == true && isset($this->url_action) == true && $this->url_action == "create"){
 
-                $fgenerator->createFiles();
+                $table = $fgenerator->showTables();
+                $fgenerator->create();
             }
             require APP.'libs/vwfgenerator.php';
             
