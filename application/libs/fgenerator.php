@@ -41,6 +41,7 @@ class fgenerator
 					$this->template = $_POST["template"];
 					echo $this->createModel($_POST["table"],$array)?"<script>alert(\"Buen trabajo! El modelo ha sido generado\")</script>":"<script>alert(\"Oh no! Ocurrio un error al generar el modelo\")</script>";
 					echo $this->createController($_POST["table"],$array)?"<script>alert(\"Buen trabajo! El controlador ha sido generado\")</script>":"<script>alert(\"Oh no! Ocurrio un error al generar el controlador\")</script>";
+					echo $this->createView($_POST["table"],$array)?"<script>alert(\"Buen trabajo! La vista ha sido generada\")</script>":"<script>alert(\"Oh no! Ocurrio un error al generar la vista\")</script>";
 				}else{
 					echo "<script>alert(\"Oh no! Debes seleccionar un template\")</script>";
 				}
@@ -78,5 +79,26 @@ class fgenerator
 		}
 
 	}
+
+	public function createView($nombreClase, $columns)
+	{
+		require APP.'libs/templates/views/'.$this->template.'.php';
+
+		try{
+
+			if (!file_exists(APP.'view/'.strtolower($nombreClase))) {  
+				mkdir(APP.'view/'.strtolower($nombreClase), 0700); 
+			}			
+
+			$archivo=fopen(APP.'view/'.strtolower($nombreClase).'/index.php','w');//abrir archivo, nombre archivo, modo apertura
+			fwrite($archivo, $cView);
+			fclose($archivo); //cerrar archivo
+			return true;
+		}catch(Excpetion $e){
+			return false;
+		}
+		
+	}
+
 }
 ?>

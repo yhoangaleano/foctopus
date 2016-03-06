@@ -4,82 +4,101 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="../../favicon.ico">
 
   <title>Ejemplo</title>
 
-  <!-- Bootstrap core CSS -->
+
   <link href="<?php echo URL; ?>css/bootstrap.min.css" rel="stylesheet">
 
 
-  <!-- Custom styles for this template -->
-  <link href="<?php echo URL; ?>css/dashboard.css" rel="stylesheet">
+</head>
 
+<body>
 
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <![endif]-->
-    </head>
-
-    <body>
-
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Ejemplo</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Dashboard</a></li>
-            </ul>
-            <form class="navbar-form navbar-right">
-              <input type="text" class="form-control" placeholder="Search...">
-            </form>
-          </div>
-        </div>
-      </nav>
-
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-              <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-              <li><a href="#">Reports</a></li>
-              
-            </ul>
-            
-          </div>
-
-          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Ejemplo</h1>
-            <h2 class="sub-header">Hola</h2>
-            
-            <?php require content; ?>
-
-          </div>
-        </div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Brand</a>
       </div>
 
-      <!-- Variable para trabajar con ajax y js -->
-      <script>
-        var url = "<?php echo URL; ?>";
-      </script>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Link</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Link</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 
-      <!-- our JavaScript -->
-      <script src="<?php echo URL; ?>js/jquery.min.js"></script>
-      <script src="<?php echo URL; ?>js/bootstrap.min.js"></script>
-      <script src="<?php echo URL; ?>js/application.js"></script>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <?php require content; ?>
+      </div>
+    </div>
+  </div>
 
-    </body>
-    </html>
+
+  <script>
+    var url = "<?php echo URL; ?>";
+  </script>
+
+  <script src="<?php echo URL; ?>js/plugins/jquery/jquery.min.js"></script>
+  <script src="<?php echo URL; ?>js//plugins/bootstrap/bootstrap.min.js"></script>
+
+  <?php
+
+  if (isset($template)) {
+    echo $template;
+  };
+
+  if (isset($js)) {
+    echo $js;
+  };
+
+  ?>
+
+</body>
+</html>

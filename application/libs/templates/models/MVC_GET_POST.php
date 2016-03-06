@@ -35,7 +35,7 @@ foreach ($columns as $value) {
 }
 
 $cModel .= "<?php\n"; 
-$cModel .= "class ".ucwords($nombreClase)."\n";
+$cModel .= "class model".ucwords($nombreClase)."\n";
 $cModel .= "{\n";
 $cModel .= "\n";
 
