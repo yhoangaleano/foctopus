@@ -10,7 +10,7 @@ class fgenerator
 		$this->conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	}
 
-	public function index(){
+	public function showTables(){
 		$table = "";
 		$tableList = array();
 		$res = $this->conn->query("SHOW TABLES");
@@ -21,30 +21,32 @@ class fgenerator
 		return $table;
 	}
 
-	public function createFiles(){
+	public function create(){
 
-		if($_POST["table"] != null){
-			$columns = $this->conn->query("SHOW COLUMNS FROM ".DB_NAME.".".$_POST["table"]);
-			$array = array();
-			while($cCol = mysqli_fetch_array($columns))
-			{
-				$array[] = array(
-					'Field'=>$cCol["Field"],
-					'Key'=>$cCol["Key"],
-					'AutoIncrement' => $cCol["Extra"]
-					);
-			}
+		if(isset($_POST["table"])){
 
-			if($_POST["template"] != null){
-				$this->template = $_POST["template"];
-				echo $this->createModel($_POST["table"],$array)?"</br> Creo el modelo":"No fue posible crear el modelo";
-			    echo $this->createController($_POST["table"],$array)?"</br> Creo el controlador":"No fue posible crear el modelo";
+			if ($_POST["table"] != null) {
+				$columns = $this->conn->query("SHOW COLUMNS FROM ".DB_NAME.".".$_POST["table"]);
+				$array = array();
+				while($cCol = mysqli_fetch_array($columns))
+				{
+					$array[] = array(
+						'Field'=>$cCol["Field"],
+						'Key'=>$cCol["Key"],
+						'AutoIncrement' => $cCol["Extra"]
+						);
+				}
+
+				if(isset($_POST["template"])){
+					$this->template = $_POST["template"];
+					echo $this->createModel($_POST["table"],$array)?"<script>alert(\"Buen trabajo! El modelo ha sido generado\")</script>":"<script>alert(\"Oh no! Ocurrio un error al generar el modelo\")</script>";
+					echo $this->createController($_POST["table"],$array)?"<script>alert(\"Buen trabajo! El controlador ha sido generado\")</script>":"<script>alert(\"Oh no! Ocurrio un error al generar el controlador\")</script>";
+				}else{
+					echo "<script>alert(\"Oh no! Debes seleccionar un template\")</script>";
+				}
 			}else{
-				echo "Debes seleccionar un template";
+				echo "<script>alert(\"Oh no! Debes seleccionar una tabla de la base de datos\")</script>";
 			}
-
-		}else{
-			echo "Debes seleccionar una base de datos";
 		}
 	}
 
