@@ -40,6 +40,7 @@ class Application
                 $table = $fgenerator->showTables();
                 $fgenerator->create();
             }
+            
             require APP.'libs/vwfgenerator.php';
             
         }elseif (file_exists(APP . 'controller/' . $this->url_controller . '.php')) {

@@ -28,15 +28,24 @@ class fgenerator
 			if ($_POST["table"] != null) {
 				$columns = $this->conn->query("SHOW COLUMNS FROM ".DB_NAME.".".$_POST["table"]);
 				$array = array();
-				while($cCol = mysqli_fetch_array($columns))
+				while($cCol = mysqli_fetch_assoc($columns))
 				{
+					$type = explode("(", $cCol["Type"] );
+					$size = 0;
+					if ( count($type) > 1) {
+						$size = explode(")", $type[1]);
+					}
+
 					$array[] = array(
 						'Field'=>$cCol["Field"],
 						'Key'=>$cCol["Key"],
+						'Type'=>$type[0],
+						'Size'=>$size[0],
+						'Null'=>$cCol["Null"],
 						'AutoIncrement' => $cCol["Extra"]
 						);
 				}
-
+				
 				if(isset($_POST["template"])){
 					$this->template = $_POST["template"];
 					echo $this->createModel($_POST["table"],$array)?"<script>alert(\"Buen trabajo! El modelo ha sido generado\")</script>":"<script>alert(\"Oh no! Ocurrio un error al generar el modelo\")</script>";
