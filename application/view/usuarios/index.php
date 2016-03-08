@@ -6,6 +6,9 @@
         <input type="password" class="form-control" placeholder="Password" required="" id="txtPassword" name="txtPassword">
     </div>
     <button type="submit" class="btn btn-primary block full-width m-b" id="btnInit">Login</button>
+    <p><?php if (isset($_GET["error"])) {
+    	echo "Ocurrio un error con las credenciales";
+    } ?></p>
 </form>
 
 <?php
